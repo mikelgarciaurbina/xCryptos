@@ -1,0 +1,1 @@
+export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
