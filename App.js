@@ -28,6 +28,7 @@ export default class App extends React.Component {
     Asset.loadAsync([
         require('./assets/images/app-logo.png'), // eslint-disable-line
         require('./assets/images/icon-alert.png'), // eslint-disable-line
+        require('./assets/images/icon-close.png'), // eslint-disable-line
         require('./assets/images/icon-settings.png'), // eslint-disable-line
     ]),
     Font.loadAsync({

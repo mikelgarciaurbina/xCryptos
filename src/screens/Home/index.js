@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo';
 import settingsIcon from '../../../assets/images/icon-settings.png';
 import { C, THEME } from '../../constants';
 import { ButtonIcon } from '../../components';
-import { Hodl, ListItem } from './components';
+import { Hodl, Info, ListItem } from './components';
 import styles from './styles';
 
 const {
@@ -53,11 +53,13 @@ class HomeScreen extends Component {
   render() {
     const {
       favorites,
+      navigation,
       settings: { nightMode },
     } = this.props;
     const {
       coin: { coin: currentCoin, price } = {},
       decimal,
+      keyboard,
       prefetch,
       refreshing,
       value,
@@ -94,6 +96,7 @@ class HomeScreen extends Component {
             )}
             style={styles.list}
           />
+          { currentCoin && !keyboard && <Info coin={currentCoin} navigation={navigation} /> }
         </LinearGradient>
       </Fragment>
     );
@@ -101,10 +104,12 @@ class HomeScreen extends Component {
 }
 HomeScreen.propTypes = {
   favorites: PropTypes.arrayOf(PropTypes.shape({})),
+  navigation: PropTypes.shape({}),
   settings: PropTypes.shape({}),
 };
 HomeScreen.defaultProps = {
   favorites: FAVORITES,
+  navigation: {},
   settings: SETTINGS,
 };
 

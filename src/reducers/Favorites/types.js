@@ -1,2 +1,1 @@
-export const SET_FAVORITES = 'SET_FAVORITES';
-export const SET_FAVORITY = 'SET_FAVORITY';
+export const UPDATE_FAVORITE = '@xCryptos/UPDATE_FAVORITE';

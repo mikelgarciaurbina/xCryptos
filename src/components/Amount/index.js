@@ -25,7 +25,7 @@ export const Amount = ({
 );
 Amount.propTypes = {
   settings: PropTypes.shape({}),
-  style: PropTypes.shape({}),
+  style: PropTypes.oneOfType([PropTypes.array, PropTypes.number, PropTypes.object]),
   symbol: PropTypes.string,
   value: PropTypes.number,
 };
