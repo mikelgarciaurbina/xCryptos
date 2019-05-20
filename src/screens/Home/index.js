@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, Text } from 'react-native';
 
 import { THEME } from '../../constants';
+import { Hodl } from './components';
 import styles from './styles';
 
 const { PRIMARY } = THEME;
@@ -10,6 +11,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = ({
     navigation: { state: { params: { backgroundColor = PRIMARY } = {} } },
   }) => ({
+    headerLeft: <Hodl />,
     headerStyle: {
       backgroundColor,
       elevation: 0,
