@@ -1,5 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+import { THEME } from '../../constants';
+
+const { WHITE } = THEME;
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -7,6 +11,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
+  },
+  icon: {
+    tintColor: WHITE,
+  },
+  list: {
+    flex: 1,
+    width: '100%',
   },
 });
 
