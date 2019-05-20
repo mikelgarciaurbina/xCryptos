@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { combineReducers, compose, createStore } from 'redux';
-import {
-  Platform, StatusBar, StyleSheet, View,
-} from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
 import AppNavigator from './src/navigation/AppNavigator';
 import indexReducer from './src/reducers';
+import { THEME } from './src/constants';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
 const store = createStore(combineReducers(indexReducer), composeEnhancers);
@@ -63,7 +62,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <StatusBar backgroundColor={THEME.PRIMARY} barStyle="light-content" />
           <AppNavigator />
         </View>
       </Provider>

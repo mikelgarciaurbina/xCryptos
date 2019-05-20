@@ -6,11 +6,8 @@ const { WHITE } = THEME;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    display: 'flex',
+    backgroundColor: THEME.WHITE,
     flex: 1,
-    justifyContent: 'center',
   },
   icon: {
     tintColor: WHITE,
@@ -18,6 +15,10 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     width: '100%',
+  },
+  screen: {
+    flex: 1,
+    backgroundColor: THEME.WHITE,
   },
 });
 
