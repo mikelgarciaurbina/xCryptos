@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { combineReducers, compose, createStore } from 'redux';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { autoRehydrate, persistStore } from 'redux-persist';
+import {
+  AsyncStorage, StatusBar, StyleSheet, View,
+} from 'react-native';
 import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
@@ -10,19 +13,30 @@ import AppNavigator from './src/navigation/AppNavigator';
 import indexReducer from './src/reducers';
 import { THEME } from './src/constants';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
-const store = createStore(combineReducers(indexReducer), composeEnhancers);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
 });
+function configureStore() {
+  return new Promise((resolve) => {
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
+    const store = createStore(combineReducers(indexReducer), composeEnhancers(autoRehydrate()));
+
+    persistStore(store, { storage: AsyncStorage }, () => resolve(store));
+  });
+}
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    store: null,
   };
+
+  async componentWillMount() {
+    this.setState({ store: await configureStore() });
+  }
 
   loadResourcesAsync = async () => Promise.all([
     Asset.loadAsync([
@@ -53,8 +67,9 @@ export default class App extends React.Component {
 
   render() {
     const { skipLoadingScreen } = this.props;
-    const { isLoadingComplete } = this.state;
-    if (!isLoadingComplete && !skipLoadingScreen) {
+    const { isLoadingComplete, store } = this.state;
+
+    if ((!isLoadingComplete && !skipLoadingScreen) || !store) {
       return (
         <AppLoading
           startAsync={this.loadResourcesAsync}
