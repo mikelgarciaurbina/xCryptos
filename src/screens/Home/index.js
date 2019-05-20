@@ -1,11 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FlatList, RefreshControl, StatusBar } from 'react-native';
+import {
+  AppState, BackHandler, FlatList, RefreshControl, StatusBar,
+} from 'react-native';
 import { LinearGradient } from 'expo';
 
 import settingsIcon from '../../../assets/images/icon-settings.png';
 import { C, THEME } from '../../constants';
+import { ServiceCoins } from '../../services';
+import { updatePricesAction } from '../../reducers/Favorites/actions';
 import { ButtonIcon } from '../../components';
 import {
   Hodl, Info, Keyboard, ListItem,
@@ -15,7 +19,10 @@ import styles from './styles';
 const {
   DEFAULT: { FAVORITES, SETTINGS },
 } = C;
-const { PRIMARY } = THEME;
+const {
+  COLOR: { BLACK },
+  PRIMARY,
+} = THEME;
 
 class HomeScreen extends Component {
   static navigationOptions = ({
@@ -48,8 +55,38 @@ class HomeScreen extends Component {
     value: undefined,
   };
 
-  fetch = () => {
-    console.log('YEAH');
+  async componentWillMount() {
+    const {
+      navigation,
+      settings: { nightMode },
+    } = this.props;
+
+    this.fetch();
+    navigation.setParams({ backgroundColor: nightMode ? BLACK : PRIMARY });
+
+    AppState.addEventListener('change', state => state === 'active' && this.fetch());
+  }
+
+  componentWillUpdate(nextProps, { coin }) {
+    BackHandler[coin ? 'addEventListener' : 'removeEventListener']('hardwareBackPress', () => {
+      const { coin: coinState } = this.state;
+      const keepAlive = coinState !== undefined;
+      if (keepAlive) this.setState({ coin: undefined });
+      return keepAlive;
+    });
+  }
+
+  fetch = async () => {
+    const {
+      favorites,
+      settings: { currency },
+      updatePrices,
+    } = this.props;
+
+    this.setState({ refreshing: true });
+    const prices = await ServiceCoins.prices(favorites.map(({ coin }) => coin), currency);
+    await updatePrices(prices);
+    this.setState({ prefetch: true, refreshing: false });
   };
 
   onChangeValue = ({ value, decimal }) => {
@@ -121,6 +158,7 @@ HomeScreen.propTypes = {
   favorites: PropTypes.arrayOf(PropTypes.shape({})),
   navigation: PropTypes.shape({}),
   settings: PropTypes.shape({}),
+  updatePrices: PropTypes.func.isRequired,
 };
 HomeScreen.defaultProps = {
   favorites: FAVORITES,
@@ -136,4 +174,11 @@ const mapStateToProps = ({ favorites, settings }) => ({
   settings,
 });
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = dispatch => ({
+  updatePrices: prices => prices && dispatch(updatePricesAction(prices)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeScreen);
