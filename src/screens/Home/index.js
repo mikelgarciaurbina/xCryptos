@@ -7,7 +7,9 @@ import { LinearGradient } from 'expo';
 import settingsIcon from '../../../assets/images/icon-settings.png';
 import { C, THEME } from '../../constants';
 import { ButtonIcon } from '../../components';
-import { Hodl, Info, ListItem } from './components';
+import {
+  Hodl, Info, Keyboard, ListItem,
+} from './components';
 import styles from './styles';
 
 const {
@@ -50,6 +52,10 @@ class HomeScreen extends Component {
     console.log('YEAH');
   };
 
+  onChangeValue = ({ value, decimal }) => {
+    this.setState({ value, decimal });
+  };
+
   render() {
     const {
       favorites,
@@ -82,7 +88,7 @@ class HomeScreen extends Component {
                 onRefresh={this.fetch}
                 tintColor={THEME.WHITE}
               />
-            )}
+)}
             renderItem={({ item }) => (
               <ListItem
                 active={currentCoin === item.coin}
@@ -96,7 +102,16 @@ class HomeScreen extends Component {
             )}
             style={styles.list}
           />
-          { currentCoin && !keyboard && <Info coin={currentCoin} navigation={navigation} /> }
+          {currentCoin && !keyboard && <Info coin={currentCoin} navigation={navigation} />}
+          {currentCoin && (
+            <Keyboard
+              visible={keyboard}
+              decimal={decimal}
+              onChange={this.onChangeValue}
+              onClose={() => this.setState({ keyboard: false, value: undefined })}
+              value={value}
+            />
+          )}
         </LinearGradient>
       </Fragment>
     );
