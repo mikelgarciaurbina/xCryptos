@@ -1,15 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StatusBar, Text } from 'react-native';
+import { FlatList, RefreshControl, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import settingsIcon from '../../../assets/images/icon-settings.png';
 import { C, THEME } from '../../constants';
 import { ButtonIcon } from '../../components';
-import { Hodl } from './components';
+import { Hodl, ListItem } from './components';
 import styles from './styles';
 
+const {
+  DEFAULT: { FAVORITES, SETTINGS },
+} = C;
 const { PRIMARY } = THEME;
 
 class HomeScreen extends Component {
@@ -34,10 +37,31 @@ class HomeScreen extends Component {
     },
   });
 
+  state = {
+    coin: undefined,
+    keyboard: false,
+    decimal: false,
+    prefetch: false,
+    refreshing: false,
+    value: undefined,
+  };
+
+  fetch = () => {
+    console.log('YEAH');
+  };
+
   render() {
     const {
+      favorites,
       settings: { nightMode },
     } = this.props;
+    const {
+      coin: { coin: currentCoin, price } = {},
+      decimal,
+      prefetch,
+      refreshing,
+      value,
+    } = this.state;
 
     return (
       <Fragment>
@@ -46,20 +70,49 @@ class HomeScreen extends Component {
           colors={nightMode ? THEME.GRADIENT_NIGHTMODE : THEME.GRADIENT}
           style={styles.screen}
         >
-          <Text>Get started by opening</Text>
+          <FlatList
+            data={favorites}
+            extraData={this.state}
+            keyExtractor={item => item.coin}
+            refreshControl={(
+              <RefreshControl
+                refreshing={refreshing && prefetch}
+                onRefresh={this.fetch}
+                tintColor={THEME.WHITE}
+              />
+            )}
+            renderItem={({ item }) => (
+              <ListItem
+                active={currentCoin === item.coin}
+                coin={item}
+                decimal={decimal}
+                conversion={price}
+                onFocus={newValue => this.setState({ coin: item, keyboard: true, value: newValue })}
+                onPress={() => this.setState({ coin: item, keyboard: false, value: undefined })}
+                value={value}
+              />
+            )}
+            style={styles.list}
+          />
         </LinearGradient>
       </Fragment>
     );
   }
 }
 HomeScreen.propTypes = {
+  favorites: PropTypes.arrayOf(PropTypes.shape({})),
   settings: PropTypes.shape({}),
 };
 HomeScreen.defaultProps = {
-  settings: C.DEFAULT.SETTINGS,
+  favorites: FAVORITES,
+  settings: SETTINGS,
 };
 
-const mapStateToProps = ({ settings }) => ({
+const mapStateToProps = ({ favorites, settings }) => ({
+  favorites: favorites.sort((a, b) => {
+    if (a.total === 0 && b.total === 0) return a.rank > b.rank ? 0 : -1;
+    return a.total < b.total ? 0 : -1;
+  }),
   settings,
 });
 

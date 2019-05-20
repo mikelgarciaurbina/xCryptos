@@ -32,7 +32,7 @@ export default {
     }, {
       coin: 'ETH',
       hodl: undefined,
-      image: 'https://www.cryptocompare.com/media/20646/eth.png',
+      image: 'https://www.cryptocompare.com/media/20646/eth_logo.png',
       name: 'Ethereum',
       price: 0,
     }, {
