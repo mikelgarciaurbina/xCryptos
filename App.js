@@ -40,7 +40,9 @@ export default class App extends React.Component {
 
   loadResourcesAsync = async () => Promise.all([
     Asset.loadAsync([
+        require('./assets/images/app-brandname.png'), // eslint-disable-line
         require('./assets/images/app-logo.png'), // eslint-disable-line
+        require('./assets/images/icon-add.png'), // eslint-disable-line
         require('./assets/images/icon-alert.png'), // eslint-disable-line
         require('./assets/images/icon-back.png'), // eslint-disable-line
         require('./assets/images/icon-close.png'), // eslint-disable-line
