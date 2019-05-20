@@ -7,7 +7,6 @@ const HomeStack = createStackNavigator(
     Home: HomeScreen,
   },
   {
-    headerMode: 'none',
     initialRouteName: 'Home',
   },
 );
