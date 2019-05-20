@@ -1,6 +1,6 @@
-import { CHANGE_SETTINGS } from './types';
+import { UPDATE_SETTINGS } from './types';
 
-export const changeSettings = data => ({
-  type: CHANGE_SETTINGS,
-  data,
+export const updateSettingsAction = settings => ({
+  type: UPDATE_SETTINGS,
+  settings,
 });

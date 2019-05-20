@@ -9,7 +9,7 @@ const HomeStack = createStackNavigator(
     Settings: SettingsScreen,
   },
   {
-    initialRouteName: 'Settings',
+    initialRouteName: 'Home',
   },
 );
 

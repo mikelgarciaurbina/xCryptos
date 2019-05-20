@@ -1,6 +1,6 @@
 import { C } from '../../constants';
 import {
-  CHANGE_SETTINGS,
+  UPDATE_SETTINGS,
 } from './types';
 
 const { DEFAULT: { SETTINGS } } = C;
@@ -9,8 +9,11 @@ const initialState = SETTINGS;
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case CHANGE_SETTINGS:
-      return [];
+    case UPDATE_SETTINGS:
+      return {
+        ...state,
+        ...action.settings,
+      };
     default:
       return state;
   }

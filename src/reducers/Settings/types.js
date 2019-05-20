@@ -1,1 +1,1 @@
-export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
+export const UPDATE_SETTINGS = '@xCryptos/UPDATE_SETTINGS';
