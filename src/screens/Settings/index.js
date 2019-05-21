@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavigationActions, StackActions } from 'react-navigation';
-import { Image, Text, View } from 'react-native';
+import {
+  Image, Platform, Text, View,
+} from 'react-native';
 
 import PKG from '../../../package.json';
 import brandnameImg from '../../../assets/images/app-brandname.png';
 import addImg from '../../../assets/images/icon-add.png';
+import backIosImg from '../../../assets/images/icon-back-ios.png';
+import backImg from '../../../assets/images/icon-back.png';
 
 import { C, THEME } from '../../constants';
 import { ServiceCoins } from '../../services';
@@ -23,9 +27,12 @@ const {
 } = C;
 
 class SettingsScreen extends Component {
-  static navigationOptions({ navigation: { navigate } }) {
+  static navigationOptions({ navigation: { goBack, navigate } }) {
     return {
       title: 'Settings',
+      headerLeft: (
+        <ButtonIcon icon={Platform.OS === 'ios' ? backIosImg : backImg} onPress={() => goBack()} />
+      ),
       headerRight: <ButtonIcon icon={addImg} onPress={() => navigate('Coins')} />,
       headerStyle: { backgroundColor: THEME.WHITE },
       headerTintColor: THEME.BLACK,
@@ -43,7 +50,7 @@ class SettingsScreen extends Component {
       currency,
     });
     ServiceCoins.prices(favorites.map(({ coin }) => coin), currency).then(updatePrices);
-  }
+  };
 
   onModal = () => {
     this.setState(prevState => ({ modal: !prevState.modal }));

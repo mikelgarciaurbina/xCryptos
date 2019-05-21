@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { BackHandler, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 
-import backImg from '../../../../../assets/images/icon-back.png';
+import deleteImg from '../../../../../assets/images/icon-delete.png';
 import { ButtonIcon, Touchable } from '../../../../components';
 import { THEME } from '../../../../constants';
 import styles from './styles';
@@ -90,7 +90,7 @@ class Keyboard extends Component {
             ))}
             <Button caption="." onPress={this.onDecimal} />
             <Button value={0} onPress={this.onNumber} />
-            <Button icon={backImg} onPress={this.onDelete} />
+            <Button icon={deleteImg} onPress={this.onDelete} />
           </View>
         )}
       </Motion>
