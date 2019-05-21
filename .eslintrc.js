@@ -19,6 +19,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'jsx-a11y/accessible-emoji': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
   },
 };

@@ -7,10 +7,14 @@ import { Image, Text, View } from 'react-native';
 import PKG from '../../../package.json';
 import brandnameImg from '../../../assets/images/app-brandname.png';
 import addImg from '../../../assets/images/icon-add.png';
+
 import { C, THEME } from '../../constants';
-import { ButtonIcon, Touchable } from '../../components';
+import { ServiceCoins } from '../../services';
+import { updatePricesAction } from '../../reducers/Favorites/actions';
 import { updateSettingsAction } from '../../reducers/Settings/actions';
-import { FieldsetSwitch } from './components';
+import { ButtonIcon, Touchable } from '../../components';
+
+import { FieldsetSwitch, ModalCurrency } from './components';
 import styles from './styles';
 
 const { version } = PKG;
@@ -32,6 +36,15 @@ class SettingsScreen extends Component {
     modal: false,
   };
 
+  onCurrency = (currency) => {
+    const { favorites, updatePrices, updateSettings } = this.props;
+    this.setState({ modal: false });
+    updateSettings({
+      currency,
+    });
+    ServiceCoins.prices(favorites.map(({ coin }) => coin), currency).then(updatePrices);
+  }
+
   onModal = () => {
     this.setState(prevState => ({ modal: !prevState.modal }));
   };
@@ -39,16 +52,19 @@ class SettingsScreen extends Component {
   onNightMode = (nightMode) => {
     const { navigation, updateSettings } = this.props;
     updateSettings({ nightMode });
-    navigation.dispatch(StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Home' })],
-    }));
-  }
+    navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: 'Home' })],
+      }),
+    );
+  };
 
   render() {
     const {
       settings: { currency = USD, nightMode = false },
     } = this.props;
+    const { modal } = this.state;
 
     return (
       <View style={styles.screen}>
@@ -70,18 +86,29 @@ class SettingsScreen extends Component {
             value={nightMode}
           />
         </View>
+        <View style={[styles.centered, styles.content]}>
+          <Text style={styles.text}>❤️</Text>
+          <Text style={styles.text}>
+            Made by a small band of superheroes in Basque Country. Thank you for your support!
+          </Text>
+        </View>
+        <ModalCurrency onClose={this.onModal} onValue={this.onCurrency} visible={modal} />
       </View>
     );
   }
 }
 SettingsScreen.propTypes = {
+  favorites: PropTypes.arrayOf(PropTypes.shape({})),
   navigation: PropTypes.shape({}),
   settings: PropTypes.shape({}),
+  updatePrices: PropTypes.func,
   updateSettings: PropTypes.func,
 };
 SettingsScreen.defaultProps = {
+  favorites: [],
   navigation: {},
   settings: {},
+  updatePrices() {},
   updateSettings() {},
 };
 
@@ -91,7 +118,11 @@ const mapStateToProps = ({ favorites, settings = {} }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  updatePrices: prices => prices && dispatch(updatePricesAction(prices)),
   updateSettings: settings => dispatch(updateSettingsAction(settings)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SettingsScreen);

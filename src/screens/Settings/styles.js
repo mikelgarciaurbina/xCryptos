@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     paddingVertical: OFFSET * 2,
     paddingHorizontal: OFFSET,
   },
+  disabled: {
+    color: THEME.COLOR_SECONDARY,
+  },
   form: {
     flex: 1,
     borderBottomColor: THEME.BACKGROUND_DARK_HIGHLIGHT,
@@ -43,6 +46,11 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: WHITE,
+  },
+  sohobase: {
+    tintColor: THEME.FONT_PRIMARY_COLOR,
+    height: FONT.SIZE.NORMAL,
+    resizeMode: 'contain',
   },
   text: {
     color: THEME.COLOR_SECONDARY,
