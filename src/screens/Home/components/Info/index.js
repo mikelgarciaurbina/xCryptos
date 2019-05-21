@@ -74,7 +74,7 @@ Info.propTypes = {
 };
 
 Info.defaultProps = {
-  coin: undefined,
+  coin: {},
 };
 
 const mapStateToProps = ({ favorites }, { coin }) => ({

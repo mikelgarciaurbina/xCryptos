@@ -1,5 +1,7 @@
 import { C } from '../../constants';
-import { UPDATE_FAVORITE, UPDATE_PRICES } from './types';
+import {
+  ADD_FAVORITE, REMOVE_FAVORITE, UPDATE_FAVORITE, UPDATE_PRICES,
+} from './types';
 
 const {
   DEFAULT: { FAVORITES },
@@ -9,6 +11,10 @@ const initialState = FAVORITES;
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case ADD_FAVORITE:
+      return [...state, action.favorite];
+    case REMOVE_FAVORITE:
+      return state.filter(({ coin }) => coin !== action.favorite.coin);
     case UPDATE_FAVORITE:
       return state.map(fav => (fav.coin !== action.favorite.coin
         ? fav
