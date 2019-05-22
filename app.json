@@ -19,11 +19,12 @@
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.mikelgarciaurbina.xcryptos",
-      "versionCode": 1
+      "permissions": [],
+      "versionCode": 2
     },
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
-      "buildNumber": "1",
+      "buildNumber": "2",
       "supportsTablet": true
     }
   }
