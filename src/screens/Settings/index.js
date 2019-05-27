@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavigationActions, StackActions } from 'react-navigation';
 import {
-  Image, Platform, Text, View,
+  Image, Linking, Platform, Text, View,
 } from 'react-native';
 
 import PKG from '../../../package.json';
@@ -67,6 +67,15 @@ class SettingsScreen extends Component {
     );
   };
 
+  onPrivacy = () => {
+    const url = 'https://www.freeprivacypolicy.com/privacy/view/a3fa5810636f376e3da75f8f1ad775b6';
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) Linking.openURL(url);
+      })
+      .catch(() => {});
+  };
+
   render() {
     const {
       settings: { currency = USD, nightMode = false },
@@ -98,6 +107,9 @@ class SettingsScreen extends Component {
           <Text style={styles.text}>
             Made by a small band of superheroes in Basque Country. Thank you for your support!
           </Text>
+          <Touchable onPress={this.onPrivacy}>
+            <Text style={[styles.text, styles.privacy]}>Privacy Policy</Text>
+          </Touchable>
         </View>
         <ModalCurrency onClose={this.onModal} onValue={this.onCurrency} visible={modal} />
       </View>

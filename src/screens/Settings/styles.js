@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: OFFSET,
     paddingVertical: UNIT,
   },
+  privacy: {
+    color: THEME.PRIMARY,
+  },
   screen: {
     flex: 1,
     backgroundColor: WHITE,
