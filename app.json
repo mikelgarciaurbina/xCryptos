@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
-    "version": "0.12.4",
+    "version": "0.12.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -20,11 +20,11 @@
     "android": {
       "package": "com.mikelgarciaurbina.xcryptos",
       "permissions": [],
-      "versionCode": 2
+      "versionCode": 3
     },
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
-      "buildNumber": "2",
+      "buildNumber": "3",
       "supportsTablet": true
     }
   }
