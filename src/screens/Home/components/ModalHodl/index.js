@@ -8,7 +8,8 @@ import styles from './styles';
 class ModalHodl extends Component {
   onChange = (value) => {
     const { coin, updateFavorite } = this.props;
-    updateFavorite({ ...coin, hodl: value ? parseFloat(value, 10) : 0 });
+    const realValue = Number.isNaN(parseFloat(value, 10)) ? 0 : value.replace(',', '.');
+    updateFavorite({ ...coin, hodl: realValue ? parseFloat(realValue, 10) : 0 });
   }
 
   render() {
