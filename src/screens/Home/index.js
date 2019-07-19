@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   AppState, BackHandler, FlatList, RefreshControl, StatusBar,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import settingsIcon from '../../../assets/images/icon-settings.png';
 import { C, THEME } from '../../constants';
