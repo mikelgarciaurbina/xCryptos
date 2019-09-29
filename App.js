@@ -6,9 +6,10 @@ import { autoRehydrate, persistStore } from 'redux-persist';
 import {
   AsyncStorage, StatusBar, StyleSheet, View,
 } from 'react-native';
-import {
-  AppLoading, Asset, Font, Icon,
-} from 'expo';
+import { AppLoading } from 'expo';
+import * as Icon from '@expo/vector-icons';
+import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
 import AppNavigator from './src/navigation/AppNavigator';
 import indexReducer from './src/reducers';
 import { THEME } from './src/constants';
