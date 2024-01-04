@@ -24,14 +24,14 @@ const {
   DONATION_URL,
   PRIVACY_URL,
 } = C;
-const JULY_28_2023_TIMESTAMP = 1690495200000;
+const JANUARY_15_2023_TIMESTAMP = 1705276544880;
 
 export default function SettingsScreen({ navigation }) {
   const [modal, setModal] = useState(false);
   const favorites = useSelector((state) => state.favorites);
   const { currency = USD, nightMode = false } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
-  const isInProduction = Date.now() > JULY_28_2023_TIMESTAMP;
+  const isInProduction = Date.now() > JANUARY_15_2023_TIMESTAMP;
 
   const onCurrency = (newCurrency) => {
     onModal();

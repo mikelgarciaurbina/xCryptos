@@ -16,7 +16,7 @@
     "plugin": [],
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
-      "buildNumber": "7",
+      "buildNumber": "8",
       "supportsTablet": true
     },
     "android": {
@@ -26,7 +26,7 @@
       },
       "blockedPermissions": ["android.permission.REQUEST_INSTALL_PACKAGES"],
       "package": "com.mikelgarciaurbina.xcryptos",
-      "versionCode": 7
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"
