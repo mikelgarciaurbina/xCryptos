@@ -12,9 +12,8 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "plugin": [],
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
       "buildNumber": "7",
@@ -25,6 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "blockedPermissions": ["android.permission.REQUEST_INSTALL_PACKAGES"],
       "package": "com.mikelgarciaurbina.xcryptos",
       "versionCode": 7
     },
