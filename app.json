@@ -17,7 +17,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
-      "buildNumber": "6",
+      "buildNumber": "7",
       "supportsTablet": true
     },
     "android": {
@@ -26,7 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.mikelgarciaurbina.xcryptos",
-      "versionCode": 6
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"
