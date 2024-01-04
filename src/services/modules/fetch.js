@@ -23,16 +23,16 @@ export default async (endpoint, props = {}) => {
         return resolve(json);
       })
       .catch((error = {}) => {
-        if (!error.response) error.message = 'Error connection'; //eslint-disable-line
+        if (!error.response) error.message = 'Error connection';
 
-        console.log('[ERROR]', { // eslint-disable-line
+        console.log('[ERROR]', {
           code: error.response ? error.response.status : undefined,
           endpoint,
           props,
           message: error.message,
         });
 
-        return resolve(undefined); // eslint-disable-line
+        return resolve(undefined);
       });
   });
 };

@@ -2,34 +2,34 @@
   "expo": {
     "name": "xCryptos",
     "slug": "xCryptos",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "0.12.7",
+    "scheme": "xCryptos",
+    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#852d91"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
-    "android": {
-      "package": "com.mikelgarciaurbina.xcryptos",
-      "permissions": [],
-      "versionCode": 5
-    },
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
-      "buildNumber": "5",
+      "buildNumber": "6",
       "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.mikelgarciaurbina.xcryptos",
+      "versionCode": 6
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
     }
   }
 }

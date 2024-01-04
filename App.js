@@ -1,18 +1,69 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
-import { combineReducers, compose, createStore } from 'redux';
-import { autoRehydrate, persistStore } from 'redux-persist';
-import {
-  AsyncStorage, StatusBar, StyleSheet, View,
-} from 'react-native';
-import { AppLoading } from 'expo';
-import * as Icon from '@expo/vector-icons';
+import { useCallback, useEffect, useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
-import AppNavigator from './src/navigation/AppNavigator';
-import indexReducer from './src/reducers';
-import { THEME } from './src/constants';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { store, persistor } from './src/reducers';
+import Pages from './src/pages';
+
+SplashScreen.preventAutoHideAsync();
+
+export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        });
+        const a = await Asset.loadAsync([
+          require('./assets/images/app-brandname.png'),
+          require('./assets/images/app-logo.png'),
+          require('./assets/images/icon-add.png'),
+          require('./assets/images/icon-alert.png'),
+          require('./assets/images/icon-back-ios.png'),
+          require('./assets/images/icon-back.png'),
+          require('./assets/images/icon-close.png'),
+          require('./assets/images/icon-delete.png'),
+          require('./assets/images/icon-settings.png'),
+        ]);
+        // añadir las imagenes a un contexto y utilizarlas
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <View onLayout={onLayoutRootView} style={styles.container}>
+          <StatusBar style="light" />
+          <Pages />
+        </View>
+      </PersistGate>
+    </Provider>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -20,82 +71,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-function configureStore() {
-  return new Promise((resolve) => {
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
-    const store = createStore(combineReducers(indexReducer), composeEnhancers(autoRehydrate()));
-
-    persistStore(store, { storage: AsyncStorage }, () => resolve(store));
-  });
-}
-
-export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-    store: null,
-  };
-
-  async componentWillMount() {
-    this.setState({ store: await configureStore() });
-  }
-
-  loadResourcesAsync = async () => Promise.all([
-    Asset.loadAsync([
-        require('./assets/images/app-brandname.png'), // eslint-disable-line
-        require('./assets/images/app-logo.png'), // eslint-disable-line
-        require('./assets/images/icon-add.png'), // eslint-disable-line
-        require('./assets/images/icon-alert.png'), // eslint-disable-line
-        require('./assets/images/icon-back-ios.png'), // eslint-disable-line
-        require('./assets/images/icon-back.png'), // eslint-disable-line
-        require('./assets/images/icon-close.png'), // eslint-disable-line
-        require('./assets/images/icon-delete.png'), // eslint-disable-line
-        require('./assets/images/icon-settings.png'), // eslint-disable-line
-    ]),
-    Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      ...Icon.Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free
-      // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'), // eslint-disable-line
-    }),
-  ]);
-
-  handleLoadingError = (error) => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
-  };
-
-  handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
-  };
-
-  render() {
-    const { skipLoadingScreen } = this.props;
-    const { isLoadingComplete, store } = this.state;
-
-    if ((!isLoadingComplete && !skipLoadingScreen) || !store) {
-      return (
-        <AppLoading
-          startAsync={this.loadResourcesAsync}
-          onError={this.handleLoadingError}
-          onFinish={this.handleFinishLoading}
-        />
-      );
-    }
-    return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <StatusBar backgroundColor={THEME.PRIMARY} barStyle="light-content" />
-          <AppNavigator />
-        </View>
-      </Provider>
-    );
-  }
-}
-App.propTypes = {
-  skipLoadingScreen: PropTypes.bool,
-};
-App.defaultProps = {
-  skipLoadingScreen: false,
-};

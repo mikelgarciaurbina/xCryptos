@@ -11,16 +11,4 @@ const ButtonIcon = ({ icon, onPress, style }) => (
   </Touchable>
 );
 
-ButtonIcon.propTypes = {
-  icon: PropTypes.number,
-  onPress: PropTypes.func,
-  style: PropTypes.oneOfType([PropTypes.array, PropTypes.number, PropTypes.object]),
-};
-
-ButtonIcon.defaultProps = {
-  icon: undefined,
-  onPress: undefined,
-  style: [],
-};
-
 export default ButtonIcon;

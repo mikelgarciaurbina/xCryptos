@@ -22,24 +22,20 @@ export default {
 
     const { BaseImageUrl: url, Data } = response;
     const dataSource = Object.values(Data).map(
-      ({
-        Id: id, ImageUrl: image, Name: coin, CoinName: name, SortOrder,
-      }) => ({
+      ({ Id: id, ImageUrl: image, Name: coin, CoinName: name, SortOrder }) => ({
         id,
         image: `${url}${image}`,
         name,
         coin,
         rank: parseInt(SortOrder, 0),
-      }),
+      })
     );
 
     return dataSource.sort((a, b) => a.rank - b.rank);
   },
 
   async prices(coins = [], currency = USD) {
-    const response = await fetch(
-      `${MIN_API}/pricemultifull?fsyms=${coins.join(',')}&tsyms=${currency}`,
-    );
+    const response = await fetch(`${MIN_API}/pricemultifull?fsyms=${coins.join(',')}&tsyms=${currency}`);
     if (!response) return undefined;
 
     const values = {};
@@ -71,7 +67,7 @@ export default {
   },
 
   async history(coin, timeline = TIMELINES[0], currency = USD) {
-    const { endpoint, limit } = TIMELINE_SERVICE.find(item => item.timeline === timeline);
+    const { endpoint, limit } = TIMELINE_SERVICE.find((item) => item.timeline === timeline);
     const url = `${MIN_API}/${endpoint}?fsym=${coin}&tsym=${currency}&limit=${limit}`;
     const response = await fetch(url);
     if (!response) return undefined;

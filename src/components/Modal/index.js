@@ -1,12 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  KeyboardAvoidingView,
-  Modal as ReactModalNative,
-  Platform,
-  Text,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, Modal as ReactModalNative, Platform, Text, View } from 'react-native';
 import { View as Motion } from 'react-native-animatable';
 
 import closeImg from '../../../assets/images/icon-close.png';
@@ -18,9 +11,7 @@ const {
   MOTION: { DURATION },
 } = THEME;
 
-const Modal = ({
-  children, onClose, title, visible,
-}) => (
+const Modal = ({ children, onClose, title, visible }) => (
   <ReactModalNative transparent visible={visible} onRequestClose={onClose}>
     <Motion
       animation={visible ? 'fadeIn' : 'fadeOut'}
@@ -29,11 +20,7 @@ const Modal = ({
       style={styles.background}
     >
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : undefined}>
-        <Motion
-          animation={visible ? 'bounceInUp' : 'bounceOutDown'}
-          duration={DURATION}
-          style={styles.container}
-        >
+        <Motion animation={visible ? 'bounceInUp' : 'bounceOutDown'} duration={DURATION} style={styles.container}>
           <View style={[styles.row, styles.centered, styles.header]}>
             {title && <Text style={styles.title}>{title}</Text>}
             <ButtonIcon icon={closeImg} onPress={onClose} style={styles.close} />
@@ -44,17 +31,5 @@ const Modal = ({
     </Motion>
   </ReactModalNative>
 );
-Modal.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func,
-  title: PropTypes.string,
-  visible: PropTypes.bool,
-};
-Modal.defaultProps = {
-  children: undefined,
-  onClose: undefined,
-  title: undefined,
-  visible: false,
-};
 
 export default Modal;
