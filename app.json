@@ -12,19 +12,26 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "plugin": [],
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
       "buildNumber": "9",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "blockedPermissions": ["android.permission.REQUEST_INSTALL_PACKAGES"],
+      "blockedPermissions": [
+        "android.permission.REQUEST_INSTALL_PACKAGES"
+      ],
       "package": "com.mikelgarciaurbina.xcryptos",
       "versionCode": 9
     },
