@@ -3,7 +3,7 @@
     "name": "xCryptos",
     "slug": "xCryptos",
     "scheme": "xCryptos",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     "plugin": [],
     "ios": {
       "bundleIdentifier": "com.mikelgarciaurbina.xcryptos",
-      "buildNumber": "8",
+      "buildNumber": "9",
       "supportsTablet": true
     },
     "android": {
@@ -26,7 +26,7 @@
       },
       "blockedPermissions": ["android.permission.REQUEST_INSTALL_PACKAGES"],
       "package": "com.mikelgarciaurbina.xcryptos",
-      "versionCode": 8
+      "versionCode": 9
     },
     "web": {
       "favicon": "./assets/favicon.png"
