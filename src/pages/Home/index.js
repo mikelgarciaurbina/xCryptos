@@ -55,11 +55,16 @@ export default function HomeScreen({ navigation }) {
   }, [currency]);
 
   useEffect(() => {
-    BackHandler[coin ? 'addEventListener' : 'removeEventListener']('hardwareBackPress', () => {
+    const handleBackPress = () => {
       const keepAlive = coin !== null;
       if (keepAlive) setCoin(null);
       return keepAlive;
-    });
+    };
+
+    if (coin) {
+      const subscription = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => subscription.remove();
+    }
   }, [coin]);
 
   const fetch = async () => {

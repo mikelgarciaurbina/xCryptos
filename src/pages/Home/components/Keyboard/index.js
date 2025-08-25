@@ -27,10 +27,16 @@ const Keyboard = ({ visible, decimal, onChange, onClose, value }) => {
 
   useEffect(() => {
     if (visible) setLoaded(true);
-    BackHandler[visible ? 'addEventListener' : 'removeEventListener']('hardwareBackPress', () => {
+    
+    const handleBackPress = () => {
       onClose();
       return true;
-    });
+    };
+
+    if (visible) {
+      const subscription = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => subscription.remove();
+    }
   }, [onClose, visible]);
 
   const onNumber = (digit) => {
